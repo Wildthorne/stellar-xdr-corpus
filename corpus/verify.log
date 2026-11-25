@@ -1,0 +1,79 @@
+  ok   manifest valid against schema (3 entries)
+
+cap0038-lp-trustline-issuer-order-01  [CAP-0038]  testnet ledger 5709494  protocol 30
+  ok   envelope: sha256
+  ok   envelope: rs-stellar-xdr round trip (396 bytes)
+  ok   envelope: js-stellar-sdk 17.4.0 round trip
+  ok   result: sha256
+  ok   result: rs-stellar-xdr round trip (56 bytes)
+  ok   result: js-stellar-sdk 17.4.0 round trip
+  ok   meta: sha256
+  ok   meta: rs-stellar-xdr round trip (2396 bytes)
+  ok   meta: js-stellar-sdk 17.4.0 round trip
+  ok   ledger_close_meta: sha256
+  ok   ledger_close_meta: rs-stellar-xdr round trip (161760 bytes)
+  ok   ledger_close_meta: js-stellar-sdk 17.4.0 round trip
+  ok   envelope/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/asset_a/credit_alphanum4/issuer = "GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR"
+  ok   envelope/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/asset_b/credit_alphanum4/issuer = "GC452LVCGSD2YIDANMWIELWXPIJNG42QLUJ3TZ5K36CGTUSEGS5BLZI2"
+  ok   envelope/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/fee = 30
+  ok   result/result/tx_success/2/op_inner/change_trust = "success"
+  ok   meta/v4/operations/2/changes/7/created/data/liquidity_pool/liquidity_pool_id = "LDZDAUEZTUZVW3GQVFVVIJUZH3COY56ER5GL6W7INLST3DNZYY3ZWDQS"
+  ok   meta/v4/operations/2/changes/0/created/data/trustline/asset/pool_share = "LDZDAUEZTUZVW3GQVFVVIJUZH3COY56ER5GL6W7INLST3DNZYY3ZWDQS"
+  ok   tx 3bb1ba1f78d9… found among 16 txs of ledger 5709494
+  ok   meta identical to the copy in LedgerCloseMeta
+  ok   result identical to the copy in LedgerCloseMeta
+  ok   ledger protocol = 30
+  ok   derived liquidity_pool_id_hex = sha256(params) f23050999d335b6c…
+  ok   issuers: a < b by bytes, a > b as strkey text
+
+cap0040-signed-payload-signer-padded-01  [CAP-0040]  testnet ledger 5709503  protocol 30
+  ok   envelope: sha256
+  ok   envelope: rs-stellar-xdr round trip (280 bytes)
+  ok   envelope: js-stellar-sdk 17.4.0 round trip
+  ok   result: sha256
+  ok   result: rs-stellar-xdr round trip (32 bytes)
+  ok   result: js-stellar-sdk 17.4.0 round trip
+  ok   meta: sha256
+  ok   meta: rs-stellar-xdr round trip (796 bytes)
+  ok   meta: js-stellar-sdk 17.4.0 round trip
+  ok   ledger_close_meta: sha256
+  ok   ledger_close_meta: rs-stellar-xdr round trip (207780 bytes)
+  ok   ledger_close_meta: js-stellar-sdk 17.4.0 round trip
+  ok   envelope/tx/tx/operations/0/body/set_options/signer/key = "PDEM272HZNUAXQKLDUZKRPLTBK5453V2JQOFLCG6HOLFXD3JMN4IOAAAAAO
+  ok   envelope/tx/tx/operations/0/body/set_options/signer/weight = 1
+  ok   result/result/tx_success/0/op_inner/set_options = "success"
+  ok   meta/v4/operations/0/changes/1/updated/data/account/signers/0/key = "PDEM272HZNUAXQKLDUZKRPLTBK5453V2JQOFLCG6HOLFXD3JMN4IOAAAAAO
+  ok   tx bd95ef60963b… found among 10 txs of ledger 5709503
+  ok   meta identical to the copy in LedgerCloseMeta
+  ok   result identical to the copy in LedgerCloseMeta
+  ok   ledger protocol = 30
+  ok   derived signed_payload_hex (29 bytes)
+  ok   derived signer_key_bytes = 68
+
+cap0073-sac-trust-trustline-01  [CAP-0073]  testnet ledger 5709505  protocol 30
+  ok   envelope: sha256
+  ok   envelope: rs-stellar-xdr round trip (624 bytes)
+  ok   envelope: js-stellar-sdk 17.4.0 round trip
+  ok   result: sha256
+  ok   result: rs-stellar-xdr round trip (64 bytes)
+  ok   result: js-stellar-sdk 17.4.0 round trip
+  ok   meta: sha256
+  ok   meta: rs-stellar-xdr round trip (2748 bytes)
+  ok   meta: js-stellar-sdk 17.4.0 round trip
+  ok   ledger_close_meta: sha256
+  ok   ledger_close_meta: rs-stellar-xdr round trip (110316 bytes)
+  ok   ledger_close_meta: js-stellar-sdk 17.4.0 round trip
+  ok   envelope/tx/tx/operations/0/body/invoke_host_function/host_function/invoke_contract/function_name = "trust"
+  ok   envelope/tx/tx/operations/0/body/invoke_host_function/host_function/invoke_contract/contract_address = "CCNZ3CPQJHAPWREXVI5UBWQMPCS7EHBQBTS4OF4SR67SMTVP6BDJGAFC"
+  ok   meta/v4/operations/0/changes/0/created/data/trustline/account_id = "GASBXUKJZ7Q4J2LKPAZXO3LRTW4JQGSKODXGMJGTP3VIRNU65FPLL5NS"
+  ok   meta/v4/operations/0/changes/0/created/data/trustline/asset/credit_alphanum4/issuer = "GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR"
+  ok   meta/v4/operations/0/changes/0/created/data/trustline/limit = "9223372036854775807"
+  ok   meta/v4/operations/0/events = []
+  ok   operation-level contract events = 0
+  ok   tx c9ad2c4f4ebe… found among 10 txs of ledger 5709505
+  note meta bytes differ from the LedgerCloseMeta copy (/v4/diagnostic_events)
+  ok   meta identical to the copy in LedgerCloseMeta once non-consensus fields are masked
+  ok   result identical to the copy in LedgerCloseMeta
+  ok   ledger protocol = 30
+
+all checks passed

@@ -1,0 +1,17 @@
+{
+  "name": "xdr-corpus-poc",
+  "private": true,
+  "type": "module",
+  "description": "Proof items for the SCF RFP 'XDR/CAP-Coverage Audit Tool': manifest schema, sample corpus entries captured on Testnet, reproduction of js-stellar-sdk#1766",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "verify": "node verify.mjs",
+    "repro": "node repro/js-stellar-sdk-1766.mjs"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "17.4.0",
+    "sdk-17-2-0": "npm:@stellar/stellar-sdk@17.2.0",
+    "sdk-17-2-1": "npm:@stellar/stellar-sdk@17.2.1",
+    "ajv": "8.17.1"
+  }
+}

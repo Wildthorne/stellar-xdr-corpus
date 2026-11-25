@@ -1,0 +1,31 @@
+js-stellar-sdk#1766 reproduction, 2026-11-13T12:03:02.654Z
+corpus entry cap0038-lp-trustline-issuer-order-01: testnet ledger 5709494, tx 3bb1ba1f78d930e2d47924fc69246190a0f60dd81d24700e025ddb584fb358f1
+issuer A GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR
+issuer B GC452LVCGSD2YIDANMWIELWXPIJNG42QLUJ3TZ5K36CGTUSEGS5BLZI2
+core's order (bytes): A then B. Plain text order: B then A
+pool ID from core's meta: f23050999d335b6cd0a96b5426993ec4ec77c48f4cbf5be86ae53d8db9c6379b
+
+== @stellar/stellar-sdk 17.2.0 (before fix)
+  TransactionBuilder.fromXDR(envelope)          -> THROWS: Assets are not in lexicographic order
+  getLiquidityPoolId(A, B, 30)                  -> THROWS: Assets are not in lexicographic order
+  new LiquidityPoolAsset(A, B, 30)              -> THROWS: Assets are not in lexicographic order
+  Asset.compare(A, B)                           -> 1 (core: -1)
+
+== @stellar/stellar-sdk 17.2.1 (fix)
+  TransactionBuilder.fromXDR(envelope)          -> ok, op[2] = changeTrust on pool (30 bps)
+  getLiquidityPoolId(A, B, 30)                  -> matches core
+  new LiquidityPoolAsset(A, B, 30)              -> ok
+  Asset.compare(A, B)                           -> -1 (core: -1)
+
+== @stellar/stellar-sdk 17.4.0 (current)
+  TransactionBuilder.fromXDR(envelope)          -> ok, op[2] = changeTrust on pool (30 bps)
+  getLiquidityPoolId(A, B, 30)                  -> matches core
+  new LiquidityPoolAsset(A, B, 30)              -> ok
+  Asset.compare(A, B)                           -> -1 (core: -1)
+
+summary
+  17.2.0  before fix  REJECTS valid ledger data
+  17.2.1  fix         decodes the ledger correctly
+  17.4.0  current     decodes the ledger correctly
+
+REPRODUCED: fails before the fix, passes from the fix on

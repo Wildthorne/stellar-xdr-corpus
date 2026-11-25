@@ -1,0 +1,395 @@
+{
+  "schema_version": "0.1",
+  "generator": {
+    "name": "xdr-corpus-poc capture.mjs",
+    "version": "0.1.0",
+    "notes": "captured 2026-11-13T11:59:31.253Z via https://soroban-testnet.stellar.org"
+  },
+  "entries": [
+    {
+      "id": "cap0038-lp-trustline-issuer-order-01",
+      "protocol_version": 30,
+      "network": {
+        "name": "testnet",
+        "passphrase": "Test SDF Network ; September 2015"
+      },
+      "source": {
+        "kind": "network-history",
+        "ledger": 5709494,
+        "tx_hash": "3bb1ba1f78d930e2d47924fc69246190a0f60dd81d24700e025ddb584fb358f1",
+        "op_index": 2,
+        "close_time": "2026-11-13T11:58:34.000Z",
+        "captured_via": "RPC getTransaction (envelope, result, meta) + getLedgers (ledger_close_meta)",
+        "recipe": "capture.mjs step 1: two issuers whose strkeys share position 1, one with a letter and one with a digit at position 2; holder trusts both, then ChangeTrust on the pool share"
+      },
+      "synthetic": false,
+      "files": [
+        {
+          "role": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "path": "entries/cap0038-lp-trustline-issuer-order-01/envelope.xdr",
+          "encoding": "binary",
+          "sha256": "ebe01267b7618b862b104b2a24e76597e0aa20d935d0b12534c796bf316251d3",
+          "size": 396
+        },
+        {
+          "role": "result",
+          "xdr_type": "TransactionResult",
+          "path": "entries/cap0038-lp-trustline-issuer-order-01/result.xdr",
+          "encoding": "binary",
+          "sha256": "044d1b1a204a2db574e0c7272c3368dc1cabc2c95317c41ac70479787e4740ae",
+          "size": 56
+        },
+        {
+          "role": "meta",
+          "xdr_type": "TransactionMeta",
+          "path": "entries/cap0038-lp-trustline-issuer-order-01/meta.xdr",
+          "encoding": "binary",
+          "sha256": "d9c177c0e040752dfa261d0bb9cc5eb6852a01d2f1b3aac9e92b0bdf83ee897a",
+          "size": 2396
+        },
+        {
+          "role": "ledger_close_meta",
+          "xdr_type": "LedgerCloseMeta",
+          "path": "entries/cap0038-lp-trustline-issuer-order-01/ledger_close_meta.xdr",
+          "encoding": "binary",
+          "sha256": "60b54dd066064b317f55abedf74281061cc968c3259d2d5758bd175209408f84",
+          "size": 161760
+        }
+      ],
+      "title": "Liquidity pool trustline whose asset issuers sort one way as strkey text and the other way as bytes",
+      "caps": [
+        "CAP-0038"
+      ],
+      "min_protocol": 18,
+      "shape": {
+        "where": "TransactionEnvelope.tx.operations[2].body.change_trust.line.pool_share",
+        "what": "Core orders pool assets by XDR bytes. Base32 puts A-Z (0-25) before 2-7 (26-31), ASCII puts digits first, so sorting G-strkeys as text reverses this pair. A decoder that checks order by text rejects a valid ledger."
+      },
+      "tags": [
+        "liquidity-pool",
+        "asset-order",
+        "strkey",
+        "sdk-divergence"
+      ],
+      "expected": {
+        "round_trip": true,
+        "decoded": [
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/asset_a/credit_alphanum4/issuer",
+            "equals": "GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR",
+            "why": "lower by XDR bytes, higher as text"
+          },
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/asset_b/credit_alphanum4/issuer",
+            "equals": "GC452LVCGSD2YIDANMWIELWXPIJNG42QLUJ3TZ5K36CGTUSEGS5BLZI2"
+          },
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/2/body/change_trust/line/pool_share/liquidity_pool_constant_product/fee",
+            "equals": 30
+          },
+          {
+            "file": "result",
+            "pointer": "/result/tx_success/2/op_inner/change_trust",
+            "equals": "success"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/2/changes/7/created/data/liquidity_pool/liquidity_pool_id",
+            "equals": "LDZDAUEZTUZVW3GQVFVVIJUZH3COY56ER5GL6W7INLST3DNZYY3ZWDQS"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/2/changes/0/created/data/trustline/asset/pool_share",
+            "equals": "LDZDAUEZTUZVW3GQVFVVIJUZH3COY56ER5GL6W7INLST3DNZYY3ZWDQS"
+          }
+        ],
+        "derived": [
+          {
+            "name": "liquidity_pool_id_hex",
+            "value": "f23050999d335b6cd0a96b5426993ec4ec77c48f4cbf5be86ae53d8db9c6379b",
+            "how": "sha256 of the XDR of LiquidityPoolParameters with assets in XDR byte order"
+          },
+          {
+            "name": "issuers_in_strkey_text_order",
+            "value": [
+              "GC452LVCGSD2YIDANMWIELWXPIJNG42QLUJ3TZ5K36CGTUSEGS5BLZI2",
+              "GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR"
+            ],
+            "ordered": true,
+            "how": "plain string sort of the two issuer strkeys; the reverse of core's order"
+          }
+        ]
+      },
+      "sightings": [
+        {
+          "url": "https://github.com/stellar/js-stellar-sdk/pull/1766",
+          "component": "js-stellar-sdk",
+          "fixed_in": "17.2.1 (16.3.1 on the 16.x line)",
+          "reproduced": true,
+          "evidence": "../repro/js-stellar-sdk-1766.log"
+        }
+      ],
+      "notes": "The RFP says the Go SDK hit and fixed the same bug earlier; this entry has not been run through the Go SDK yet."
+    },
+    {
+      "id": "cap0040-signed-payload-signer-padded-01",
+      "protocol_version": 30,
+      "network": {
+        "name": "testnet",
+        "passphrase": "Test SDF Network ; September 2015"
+      },
+      "source": {
+        "kind": "network-history",
+        "ledger": 5709503,
+        "tx_hash": "bd95ef60963bfc2b9af65698c7a6bac2642812afa81b08e9b8a58be72facfad3",
+        "op_index": 0,
+        "close_time": "2026-11-13T11:59:19.000Z",
+        "captured_via": "RPC getTransaction (envelope, result, meta) + getLedgers (ledger_close_meta)",
+        "recipe": "capture.mjs step 2: SetOptions adds an ed25519 signed-payload signer over the account's own key, payload 29 bytes"
+      },
+      "synthetic": false,
+      "files": [
+        {
+          "role": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "path": "entries/cap0040-signed-payload-signer-padded-01/envelope.xdr",
+          "encoding": "binary",
+          "sha256": "e33f26a81a98eb6cc9e676854ff976994671583370c8b2c84f63090900092b53",
+          "size": 280
+        },
+        {
+          "role": "result",
+          "xdr_type": "TransactionResult",
+          "path": "entries/cap0040-signed-payload-signer-padded-01/result.xdr",
+          "encoding": "binary",
+          "sha256": "3b504316f80a7d32281ccdfd08b911ed624bed698151af5eedafefe003e263cd",
+          "size": 32
+        },
+        {
+          "role": "meta",
+          "xdr_type": "TransactionMeta",
+          "path": "entries/cap0040-signed-payload-signer-padded-01/meta.xdr",
+          "encoding": "binary",
+          "sha256": "f584ec7585e9a7fdc5c77b4249876089f840acb319dd3a82b6b0375a3e1062d1",
+          "size": 796
+        },
+        {
+          "role": "ledger_close_meta",
+          "xdr_type": "LedgerCloseMeta",
+          "path": "entries/cap0040-signed-payload-signer-padded-01/ledger_close_meta.xdr",
+          "encoding": "binary",
+          "sha256": "f7a7e2bc8e660f66aba43fe54d82cd1d412c938e0058a8c3fc1592d07ba9dfa8",
+          "size": 207780
+        }
+      ],
+      "title": "Signed-payload signer (P… strkey) with a payload that needs XDR padding",
+      "caps": [
+        "CAP-0040"
+      ],
+      "min_protocol": 19,
+      "shape": {
+        "where": "TransactionEnvelope.tx.operations[0].body.set_options.signer.key (ed25519_signed_payload)",
+        "what": "Signer key is 32-byte key + 4-byte length + 29-byte payload padded to 32 (68 bytes), not the 32 bytes most code assumes. Stored into a 32-byte column it halts or silently truncates ingestion."
+      },
+      "tags": [
+        "signer",
+        "signed-payload",
+        "strkey",
+        "padding",
+        "variable-length-key"
+      ],
+      "expected": {
+        "round_trip": true,
+        "decoded": [
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/0/body/set_options/signer/key",
+            "equals": "PDEM272HZNUAXQKLDUZKRPLTBK5453V2JQOFLCG6HOLFXD3JMN4IOAAAAAO3LURF6MJYV6NVNZMULS7O7XQYUCE4E4TZP4UENCGX2NJ6FQAAAAAL24"
+          },
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/0/body/set_options/signer/weight",
+            "equals": 1
+          },
+          {
+            "file": "result",
+            "pointer": "/result/tx_success/0/op_inner/set_options",
+            "equals": "success"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/0/changes/1/updated/data/account/signers/0/key",
+            "equals": "PDEM272HZNUAXQKLDUZKRPLTBK5453V2JQOFLCG6HOLFXD3JMN4IOAAAAAO3LURF6MJYV6NVNZMULS7O7XQYUCE4E4TZP4UENCGX2NJ6FQAAAAAL24",
+            "why": "the stored signer is the full P… key, not its base G… account"
+          }
+        ],
+        "derived": [
+          {
+            "name": "signed_payload_hex",
+            "value": "b5d225f3138af9b56e5945cbeefde18a089c272797f284688d7d353e2c",
+            "how": "payload field of SignerKeyEd25519SignedPayload, without padding"
+          },
+          {
+            "name": "signed_payload_len",
+            "value": 29,
+            "how": "length prefix of the payload"
+          },
+          {
+            "name": "signer_key_bytes",
+            "value": 68,
+            "how": "32 (ed25519) + 4 (length) + 29 payload padded to 32"
+          }
+        ]
+      },
+      "sightings": [
+        {
+          "url": "https://github.com/stellar/wallet-backend/pull/729",
+          "component": "wallet-backend",
+          "reproduced": false
+        },
+        {
+          "url": "https://github.com/stellar/wallet-backend/issues/716",
+          "component": "wallet-backend",
+          "reproduced": false
+        }
+      ]
+    },
+    {
+      "id": "cap0073-sac-trust-trustline-01",
+      "protocol_version": 30,
+      "network": {
+        "name": "testnet",
+        "passphrase": "Test SDF Network ; September 2015"
+      },
+      "source": {
+        "kind": "network-history",
+        "ledger": 5709505,
+        "tx_hash": "c9ad2c4f4ebe0e9da0c302ac5f4d7f485dab4c7d9b06e05b47da1ae65b12f8fd",
+        "op_index": 0,
+        "close_time": "2026-11-13T11:59:29.000Z",
+        "captured_via": "RPC getTransaction (envelope, result, meta) + getLedgers (ledger_close_meta)",
+        "recipe": "capture.mjs step 3: deploy the SAC for XDRC:issuerA, then a fresh account calls SAC trust(own address)"
+      },
+      "synthetic": false,
+      "files": [
+        {
+          "role": "envelope",
+          "xdr_type": "TransactionEnvelope",
+          "path": "entries/cap0073-sac-trust-trustline-01/envelope.xdr",
+          "encoding": "binary",
+          "sha256": "879cec96f39784ac0a9cde00fdccf738a379bc84f9cdbfc0e07c274b20f3c45e",
+          "size": 624
+        },
+        {
+          "role": "result",
+          "xdr_type": "TransactionResult",
+          "path": "entries/cap0073-sac-trust-trustline-01/result.xdr",
+          "encoding": "binary",
+          "sha256": "50bcdc330d430e8fbce949eb1057d6b8eec29ee077bbe8b1ca14f4db90d0f462",
+          "size": 64
+        },
+        {
+          "role": "meta",
+          "xdr_type": "TransactionMeta",
+          "path": "entries/cap0073-sac-trust-trustline-01/meta.xdr",
+          "encoding": "binary",
+          "sha256": "096eee0cd1927b3daf8f712d20db2bdb4faca404c23233e6e11480f3521a9eb3",
+          "size": 2748
+        },
+        {
+          "role": "ledger_close_meta",
+          "xdr_type": "LedgerCloseMeta",
+          "path": "entries/cap0073-sac-trust-trustline-01/ledger_close_meta.xdr",
+          "encoding": "binary",
+          "sha256": "9325f6097f8ed023d54c8a4a7b4b1634fde213c80b931d531c305e3a49bab8f4",
+          "size": 110316
+        }
+      ],
+      "title": "Trustline created by the Stellar Asset Contract trust() function, with no ChangeTrust operation and no contract event",
+      "caps": [
+        "CAP-0073"
+      ],
+      "min_protocol": 26,
+      "shape": {
+        "where": "TransactionMeta.v4.operations[0].changes[0].created.data.trustline (op is invoke_host_function)",
+        "what": "The trustline appears only as a ledger entry change under an InvokeHostFunction op. The op emits no event, so indexers that derive trustline history from ChangeTrust ops or from events miss it."
+      },
+      "tags": [
+        "sac",
+        "trustline",
+        "soroban",
+        "no-event",
+        "participants-from-meta"
+      ],
+      "expected": {
+        "round_trip": true,
+        "events": 0,
+        "nonconsensus": [
+          {
+            "pointer": "/v4/diagnostic_events",
+            "why": "Diagnostic events are emitted only when a node enables them, and core_metrics/invoke_time_nsecs is wall-clock time measured by that node. On capture, RPC getTransaction and getLedgers returned this tx with invoke_time_nsecs 126023 vs 128834; everything else was identical."
+          }
+        ],
+        "decoded": [
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/0/body/invoke_host_function/host_function/invoke_contract/function_name",
+            "equals": "trust"
+          },
+          {
+            "file": "envelope",
+            "pointer": "/tx/tx/operations/0/body/invoke_host_function/host_function/invoke_contract/contract_address",
+            "equals": "CCNZ3CPQJHAPWREXVI5UBWQMPCS7EHBQBTS4OF4SR67SMTVP6BDJGAFC"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/0/changes/0/created/data/trustline/account_id",
+            "equals": "GASBXUKJZ7Q4J2LKPAZXO3LRTW4JQGSKODXGMJGTP3VIRNU65FPLL5NS"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/0/changes/0/created/data/trustline/asset/credit_alphanum4/issuer",
+            "equals": "GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/0/changes/0/created/data/trustline/limit",
+            "equals": "9223372036854775807",
+            "why": "CAP-0073: trust() always creates an unlimited trustline"
+          },
+          {
+            "file": "meta",
+            "pointer": "/v4/operations/0/events",
+            "equals": [],
+            "why": "no operation-level event; only the transaction-level fee events exist"
+          }
+        ],
+        "derived": [
+          {
+            "name": "trustline_added",
+            "value": [
+              "GASBXUKJZ7Q4J2LKPAZXO3LRTW4JQGSKODXGMJGTP3VIRNU65FPLL5NS|XDRC:GCXBPXZS5D64ZESOFE55PGCN3N5XL7SQOVMOMA3XWUGFNGQNGDIEFYIR"
+            ],
+            "how": "meta change with no pre-state and a trustline post-state, under any op type"
+          }
+        ]
+      },
+      "sightings": [
+        {
+          "url": "https://github.com/stellar/wallet-backend/issues/731",
+          "component": "wallet-backend",
+          "reproduced": false
+        },
+        {
+          "url": "https://github.com/stellar/stellar-etl/issues/460",
+          "component": "stellar-etl",
+          "reproduced": false
+        }
+      ]
+    }
+  ]
+}
