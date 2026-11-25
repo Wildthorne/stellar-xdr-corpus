@@ -1,4 +1,4 @@
-# xdr-corpus-poc
+# Stellar XDR Corpus (proof of concept)
 
 Proof items for the SCF RFP **"XDR/CAP-Coverage Audit Tool and Indexer-Hardening Guide"** ([RFP track](https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track#current-open-rfps)). The RFP treats a proposal as incomplete without three things:
 
