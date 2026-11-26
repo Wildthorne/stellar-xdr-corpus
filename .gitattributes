@@ -1,0 +1,2 @@
+# Raw XDR is binary: no line-ending conversion or text diffs (keeps the sha256 checks valid on every OS)
+*.xdr binary
